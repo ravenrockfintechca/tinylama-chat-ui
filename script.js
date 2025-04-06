@@ -1,6 +1,6 @@
 async function sendMessage() {
   const input = document.getElementById('user-input');
-  const message = input.value;
+  const message = input.value.trim();
   if (!message) return;
 
   const chatBox = document.getElementById('chat-box');
@@ -8,20 +8,27 @@ async function sendMessage() {
   input.value = '';
 
   try {
-    const response = await fetch('/api/generate', {
+    const response = await fetch('http://45.76.196.88:8080/api/generate', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        model: "tinyllama",  
+        model: 'tinyllama',
         prompt: message,
         stream: false
       })
     });
 
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(`响应失败：${response.status} ${response.statusText} - ${errorText}`);
+    }
+
     const data = await response.json();
-    chatBox.innerHTML += `<p><strong>AI:</strong> ${data.response}</p>`;
-    chatBox.scrollTop = chatBox.scrollHeight;
+    chatBox.innerHTML += `<p><strong>TinyLlama:</strong> ${data.response}</p>`;
   } catch (err) {
-    chatBox.innerHTML += `<p><strong>错误:</strong> 无法连接到模型服务，请检查网络或服务器。</p>`;
+    chatBox.innerHTML += `<p style="color:red;"><strong>TinyLlama: ⚠️</strong> 伺服器錯誤或連線逾時</p>`;
+    console.error(err);
   }
+
+  chatBox.scrollTop = chatBox.scrollHeight;
 }
