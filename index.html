@@ -2,16 +2,19 @@
 <html lang="zh">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>TinyLlama 聊天助手</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ztrader AI</title>
   <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
 </head>
 <body>
-  <div class="chat-container">
-    <h2>💬 TinyLlama 金融对话助手</h2>
-    <div id="chat-box"></div>
-    <input id="user-input" type="text" placeholder="请输入您的问题..." />
-    <button onclick="sendMessage()">发送</button>
+  <div class="container">
+    <h1>Ztrader AI</h1>
+    <div id="chat-box" class="chat-box"></div>
+    <div class="input-area">
+      <input type="text" id="user-input" placeholder="请输入你的问题..." />
+      <button onclick="sendMessage()">发送</button>
+    </div>
   </div>
   <script src="script.js"></script>
 </body>

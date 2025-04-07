@@ -1,3 +1,4 @@
+
 async function sendMessage() {
   const input = document.getElementById('user-input');
   const message = input.value.trim();
@@ -7,7 +8,6 @@ async function sendMessage() {
   chatBox.innerHTML += `<p><strong>你:</strong> ${message}</p>`;
   input.value = '';
 
-  // 自动识别是否本地调试
   const isLocal = window.location.hostname === 'localhost';
   const API_URL = isLocal
     ? 'http://localhost:11434/api/generate'
