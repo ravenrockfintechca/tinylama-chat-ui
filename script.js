@@ -1,4 +1,3 @@
-
 async function sendMessage() {
   const input = document.getElementById('user-input');
   const message = input.value.trim();
@@ -18,7 +17,7 @@ async function sendMessage() {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        model: 'tinyllama',
+        model: 'tinyllama:latest',
         prompt: message,
         stream: false
       })
