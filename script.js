@@ -7,8 +7,14 @@ async function sendMessage() {
   chatBox.innerHTML += `<p><strong>你:</strong> ${message}</p>`;
   input.value = '';
 
+  // 自动识别是否本地调试
+  const isLocal = window.location.hostname === 'localhost';
+  const API_URL = isLocal
+    ? 'http://localhost:11434/api/generate'
+    : 'https://chat.ztrader.ai/api/generate';
+
   try {
-    const response = await fetch('http://chat.ztrader.ai/api/generate', {
+    const response = await fetch(API_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -20,13 +26,13 @@ async function sendMessage() {
 
     if (!response.ok) {
       const errorText = await response.text();
-      throw new Error(`响应失败：${response.status} ${response.statusText} - ${errorText}`);
+      throw new Error(`响应失败: ${response.status} ${response.statusText} - ${errorText}`);
     }
 
     const data = await response.json();
     chatBox.innerHTML += `<p><strong>TinyLlama:</strong> ${data.response}</p>`;
   } catch (err) {
-    chatBox.innerHTML += `<p style="color:red;"><strong>TinyLlama: ⚠️</strong> 伺服器錯誤或連線逾時</p>`;
+    chatBox.innerHTML += `<p style="color:red;"><strong>TinyLlama ⚠️:</strong> 无法连接模型服务，请检查网络或服务器状态。</p>`;
     console.error(err);
   }
 
